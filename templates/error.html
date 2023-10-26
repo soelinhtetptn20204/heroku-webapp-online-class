@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block main %}
+<h1>{{ msg }}</h1>
+<br>
+<form action="/{{ prev }}" align="center">
+<button type='submit'>
+Back to {{ prev }} page
+</button>
+</form>
+{% endblock %}

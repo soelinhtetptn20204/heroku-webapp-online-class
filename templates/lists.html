@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block main %}
+{% if Lists|length==0 %}
+<h3 align="center">No one has submitted yet</h3>
+{% else %}
+<form action="/details" method="get">
+    <select name="goo" style="width:200px">
+    {% for i in Lists %}
+    <option value="{{ i.username }}">{{ i.username }}</option>
+    {% endfor %}
+    </select>
+    <select name="eee" style="width:200px">
+    <option value="{{ exname }}">{{ exname }}</option>
+    </select>
+    <button type="submit">Search</button>
+</form>
+{% if todo %}
+<h3 align="center">{{ USER }}'s works</h3>
+{% if Format == "blank" %}
+<ol>
+    {% for j,i in data.items() %}
+    <li><textarea readonly autocomplete="off" spellcheck="false" style="width:100%; height:35px; vertical-align:top; font-size: 22px; resize:none">{{ i }}</textarea></li>
+    {% endfor %}
+</ol>
+{% elif Format == "short" %}
+<ol>
+    {% for j,i in data.items() %}
+    <li><textarea readonly autocomplete="off" spellcheck="false" style="width:100%; height:75px; vertical-align:top; font-size: 22px; resize:none">{{ i }}</textarea></li>
+    {% endfor %}
+</ol>
+{% else %}
+<script src="/static/JS.js">   
+</script>
+    {% for j,i in data.items() %}
+    <li><textarea id="{{ j }}" readonly autocomplete="off" spellcheck="false" style="width:100%; height:500px; vertical-align:top; font-size: 22px; resize:none">{{ i }}</textarea>
+    <button onclick="countr('{{ j }}', 'h{{ j }}')">Click to know the words</button><h4 align="center" id="h{{ j }}"></h4></li>
+    {% endfor %}
+{% endif %}
+{% endif %}
+{% endif %}
+<br><br><br>
+<div align="center">
+    <form action="/teacher_mode" method="get">
+        <button type="submit">Go back to default page</button>
+    </form>
+</div>
+{% endblock %}

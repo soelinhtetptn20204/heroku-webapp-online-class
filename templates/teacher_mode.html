@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block main %}
+<script>
+    $(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+</script>
+<h2 align="center">Generate a virtual test/exercise format</h2>
+<a align="center" style="color:green">{{ message }}</a>
+<div align="center"><form method="post" action="/teacher_mode">
+    <div class="form-group">
+        <input autocomplete="off" spellcheck="false" autofocus class="form-control" name="exercise" placeholder="enter name of the exercise" type="text" style="width:220px"></div>
+    <div class="form-group"><select name="format" style="width: 200px">
+        <option value='long'>Long Paragraph</option>
+        <option value='short'>Short Questions</option>
+        <option value='blank'>Like Short quiz</option>
+    </select></div>
+    <div class="form-group"><input class="form-control" type="number" name="quantity" min="1" max="25" placeholder="Quantities (max is 25)"  style="width:200px"></div>
+    <button class="btn btn-primary" type="submit">OK. Create.</button>
+</form></div>
+<h3 align="center">Note that you can't choose multiple Format simultaneously!</h3>
+<br>
+<h2 align="center">History of the exercises</h2>
+<div align="center">
+    <table class="table tablestriped">
+        <thead>
+            <tr>
+                <th class="text-start">Name</th>
+                <th class="text-start">Format</th>
+                <th class="text-end">Quantities of questions</th>
+                <th class="text-end">Submitted/Started</th>
+                <th class="text-end">Link to view details</th>
+            </tr>
+        </thead><tbody>
+        {% if history|length %}
+        {% for i in history %}
+        <tr>
+            <td class="text-start">{{ i.name }}</td>
+            <td class="text-start">{{ i.format }}</td>
+            <td class="text-end">{{ i.quan }}</td>
+            <td class="text-end">{{ i.submitted }}/{{ i.started }}</td>
+            <td class="text-end"><form action="/details" method="post">
+                <button type="submit" value="{{ i.name }}" name="e">View Details</button>
+            </form></td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td class="text-start">-</td><td class="text-start">-</td><td class="text-end">-</td>
+            <td class="text-end">-/-</td><td>Nothing to view here</td>
+        </tr>
+        {% endif %}</tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block mode %}Validation Mode!
+{% endblock %}
+{% block main %}
+<form action="/teacher_mode_validation" method="post">
+    <input name="secret" type="password" autocomplete="off">
+    <button type="submit">Confirm here</button>
+</form>
+{% endblock %}

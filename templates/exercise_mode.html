@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% block main %}
+<h2 align="center">{{ exname }}</h2>
+{% if Format=="blank" %}
+<script>
+    $(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+</script>
+<form action="/submitted" method="POST">
+    <ol>
+    {% if not can %}
+    {% for i in quan %}
+    <li><input type="text" name="no{{ i }}" autocomplete="off" spellcheck="false" style="width:100%; vertical-align:top; font-size: 22px;"></li>
+    {% endfor %}
+    {% else %}
+    {% for i,j in data.items() %}
+    <li><input type="text" name="{{ i }}" autocomplete="off" spellcheck="false" style="width:100%; vertical-align:top; font-size: 22px;" value="{{ j }}"></li>
+    {% endfor %}
+    {% endif %}
+    </ol>
+    <button type="submit">Submit</button>
+</form>
+
+{% elif Format=="short" %}
+<script>
+    $(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+</script>
+<form action="/submitted" method="POST" id="HereForm">
+    <button type="submit">Submit</button>
+</form><ol>
+{% if not can %}
+{% for i in quan %}
+<li><textarea name="no{{ i }}" form="HereForm" style="width:100%; vertical-align:top; height:80px; font-size: 22px;"></textarea></li>
+{% endfor %}
+{% else %}
+{% for i,j in data.items() %}
+<li><textarea name="{{ i }}" form="HereForm" style="width:100%; vertical-align:top; height:80px; font-size: 22px;">{{ j }}</textarea></li>
+{% endfor %}
+{% endif %}</ol>
+
+{% else %}
+<script src="/static/JS.js">   
+</script>
+<form action="/submitted" method="POST" id="HereForm">
+    <button type="submit">Submit</button>
+</form><ol>
+{% if not can %}
+{% for i in quan %}
+<li><textarea name="no{{ i }}" form="HereForm" id="n{{ i }}" style="width:100%; vertical-align:top; height:500px; font-size: 22px; resize:none" onkeyup="countr(this.id, 'h{{ i }}')"></textarea>
+    <h4 align="center" id="h{{ i }}"></h4>
+</li>
+{% endfor %}
+{% else %}
+{% for i,j in data.items() %}
+<li><textarea name="{{ i }}" form="HereForm" id="n{{ i }}" style="width:100%; vertical-align:top; height:500px; font-size: 22px; resize:none" onkeyup="countr(this.id, 'h{{ i }}')">{{ j }}</textarea>
+  <button onclick="countr('n{{ i }}', 'h{{ i }}')">Click to know the words</button>
+  <h4 align="center" id="h{{ i }}"></h4>
+</li>
+{% endfor %}
+{% endif %}
+</ol>
+{% endif %}
+{% endblock %}

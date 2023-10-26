@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<script>
+    $(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+</script>
+<form action="/login" method="post">
+    <div class="form-group">
+        <input autocomplete="off" spellcheck="false" autofocus class="form-control" name="username" placeholder="Username" type="text">
+    </div>
+    <div class="form-group">
+        <input class="form-control" name="password" placeholder="Password" type="password">
+    </div>
+    <button class="btn btn-primary" type="submit">Log In</button>
+</form>
+{% endblock %}
